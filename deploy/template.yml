@@ -136,8 +136,8 @@ Resources:
       MethodSettings:
         - ResourcePath: "/*"
           HttpMethod: "*"
-          ThrottlingBurstLimit: '1'
-          ThrottlingRateLimit: '1'
+          ThrottlingBurstLimit: 1
+          ThrottlingRateLimit: 1
 
 Outputs:
   AccessUrl:
