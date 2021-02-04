@@ -12,12 +12,12 @@ async function login(email, password) {
 		"password": password
 	}
 
-	let response = await request(async () => await axiosInstance.post('https://rest-prod.immedia-semi.com/api/v4/account/login', postData))
+	let response = await request(async () => await axiosInstance.post('https://rest-prod.immedia-semi.com/api/v5/account/login', postData))
 
 	return {
-		accountId: response.data.account.id,
-		authToken: response.data.authtoken.authtoken,
-		tier: response.data.region.tier
+		accountId: response.data.account.account_id,
+		authToken: response.data.auth.token,
+		tier: response.data.account.tier
 	}
 }
 
