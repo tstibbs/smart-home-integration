@@ -9,7 +9,8 @@ async function login(email, password) {
 	let postData = {
 		"unique_id": appId,
 		"email": email,
-		"password": password
+		"password": password,
+		"reauth": true
 	}
 
 	let response = await request(async () => await axiosInstance.post('https://rest-prod.immedia-semi.com/api/v5/account/login', postData))
