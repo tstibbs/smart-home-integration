@@ -1,14 +1,14 @@
 import modofun from 'modofun'
 
 import {post} from './utils.js'
-import {checkArm} from './blink/checkArm.js'
+import {checkArmed, checkAllArmed} from './blink/checkArm.js'
 import {isAWS} from './envs.js'
 
-const handleBlinkCheckArm = post(
-	async (req, res) => {
+const wrapper = (delegate) => {
+	return async (req, res) => {
 		try {
-			let armed = await checkArm(req.body.email, req.body.password)
-			res.json(armed)
+			let result = await delegate(req.body)
+			res.json(result)
 		} catch (e) {
 			if (Number.isInteger(e.status)) {
 				res.status(e.status).end()
@@ -18,11 +18,24 @@ const handleBlinkCheckArm = post(
 			}
 		}
 	}
-)
+}
+
+const handleBlinkCheckArmed = post(wrapper(
+	async (body) => {
+		return await checkArmed(body.email, body.password)
+	}
+))
+
+const handleBlinkCheckAllArmed = post(wrapper(
+	async (body) => {
+		return await checkAllArmed(body.email, body.password)
+	}
+))
 
 let router = modofun(
 	{
-		blinkCheckArm: handleBlinkCheckArm
+		blinkCheckArmed: handleBlinkCheckArmed,
+		blinkCheckAllArmed: handleBlinkCheckAllArmed
 	},
 	{
 		mode: 'reqres'
