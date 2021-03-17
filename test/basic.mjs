@@ -1,13 +1,4 @@
-import {strictEqual} from 'assert'
-import {validate} from '@tstibbs/cloud-core-utils'
+import {validateCdkAssets} from '@tstibbs/cloud-core-utils'
+import {STACK_NAME} from '../lib/deploy-envs.js'
 
-import dist from '../dist/main.js'
-
-//just check it imports, relatively little value in testing it properly
-import '../deploy/deploy-stack.mjs'
-
-//check it exposes a function, that's all we can do without proper unit tests
-strictEqual(typeof dist.handler, 'function')
-
-//validate cf script
-await validate('deploy/template.yml')
+await validateCdkAssets(STACK_NAME, 1)

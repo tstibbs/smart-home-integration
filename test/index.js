@@ -1,9 +1,12 @@
 //just a wrapper to allow running this locally in dev - but app.js is what you'd really use in the serverless function
 
-const express = require('express')
-const bodyParser = require('body-parser')
+import express from 'express'
+import bodyParser from 'body-parser'
+import {validateCdkAssets} from '@tstibbs/cloud-core-utils'
 
-const router = require('../dist/main.js').handler
+let handlers = await validateCdkAssets('smart-home-integration', 1)
+
+const router = handlers[0]
 
 const app = express()
 const port = 3001

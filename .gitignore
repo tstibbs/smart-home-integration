@@ -1,6 +1,9 @@
 tmp/
-dist/
 .env
+.cdk.staging
+cdk.out
+cdk.tmp/
+
 
 # Created by https://www.toptal.com/developers/gitignore/api/node
 # Edit at https://www.toptal.com/developers/gitignore?templates=node

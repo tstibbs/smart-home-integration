@@ -1,27 +1,32 @@
 {
 	"name": "@tstibbs/smart-home-integration-functions",
 	"private": true,
+	"type": "module",
 	"dependencies": {
 		"axios": "^0.21.1",
 		"dotenv": "^8.2.0",
 		"modofun": "^1.2.2"
 	},
 	"devDependencies": {
+		"@aws-cdk/aws-apigateway": "^1.93.0",
+		"@aws-cdk/aws-lambda": "^1.93.0",
+		"@aws-cdk/aws-lambda-nodejs": "^1.93.0",
+		"@aws-cdk/core": "^1.93.0",
 		"@tstibbs/cloud-core-utils": "file:../cloud-core/aws/utils",
+		"aws-cdk": "^1.93.0",
 		"body-parser": "^1.19.0",
+		"esbuild": "^0.9.2",
 		"express": "^4.17.1",
-		"webpack": "^4.44.1",
-		"webpack-cli": "^3.3.12",
-		"webpack-merge": "^5.1.4",
-		"webpack-shell-plugin": "^0.5.0"
+		"jest": "^26.6.3",
+		"node-watch-changes": "^2.0.3"
 	},
 	"scripts": {
-		"dev": "NODE_ENV=development webpack",
-		"dev:_serve": "nodemon --watch dist --watch ./test/index.js ./test/index.js",
-		"build": "rm -rf dist/* && webpack",
-		"test": "APP_ID=dummy CF_ROLE_ARN=dummy node test/basic.mjs",
-		"package": "cd dist && rm -f dist/function.zip && zip -r function.zip .",
-		"deploy": "node deploy/deploy-stack.mjs",
-		"everything": "npm run build && npm run test && npm run package && npm run deploy"
+		"dev": "cdk-tools watch \"dev:_serve\"",
+		"dev:_serve": "nodemon --watch cdk.out --watch ./test/index.js ./test/index.js",
+		"test": "APP_ID=dummy CF_ROLE_ARN=dummy node test/basic.mjs && cdk-tools testcdk",
+		"testsynth": "cdk-tools testsynth",
+		"dryrun": "cdk-tools dryrun",
+		"deploy": "cdk-tools deploy",
+		"everything": "npm run test && npm run testsynth && npm run deploy"
 	}
 }
