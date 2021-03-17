@@ -7,13 +7,15 @@ const axiosInstance = axios.create()
 
 async function login(email, password) {
 	let postData = {
-		"unique_id": appId,
-		"email": email,
-		"password": password,
-		"reauth": true
+		unique_id: appId,
+		email: email,
+		password: password,
+		reauth: true
 	}
 
-	let response = await request(async () => await axiosInstance.post('https://rest-prod.immedia-semi.com/api/v5/account/login', postData))
+	let response = await request(
+		async () => await axiosInstance.post('https://rest-prod.immedia-semi.com/api/v5/account/login', postData)
+	)
 
 	return {
 		accountId: response.data.account.account_id,

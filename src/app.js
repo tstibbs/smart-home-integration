@@ -4,7 +4,7 @@ import {post} from './utils.js'
 import {checkArmed, checkAllArmed} from './blink/checkArm.js'
 import {isAWS} from './envs.js'
 
-const wrapper = (delegate) => {
+const wrapper = delegate => {
 	return async (req, res) => {
 		try {
 			let result = await delegate(req.body)
@@ -20,17 +20,17 @@ const wrapper = (delegate) => {
 	}
 }
 
-const handleBlinkCheckArmed = post(wrapper(
-	async (body) => {
+const handleBlinkCheckArmed = post(
+	wrapper(async body => {
 		return await checkArmed(body.email, body.password)
-	}
-))
+	})
+)
 
-const handleBlinkCheckAllArmed = post(wrapper(
-	async (body) => {
+const handleBlinkCheckAllArmed = post(
+	wrapper(async body => {
 		return await checkAllArmed(body.email, body.password)
-	}
-))
+	})
+)
 
 let router = modofun(
 	{
