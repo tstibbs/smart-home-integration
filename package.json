@@ -31,10 +31,10 @@
 	"scripts": {
 		"dev": "cdk-tools watch \"dev:_serve\"",
 		"dev:_serve": "nodemon --watch cdk.out --watch ./test/index.js ./test/index.js",
-		"test": "APP_ID=dummy CF_ROLE_ARN=dummy node test/basic.mjs && cdk-tools testcdk",
+		"test": "APP_ID=dummy CF_ROLE_ARN=dummy node test/basic.js && cdk-tools testcdk",
 		"testsynth": "cdk-tools testsynth",
 		"dryrun": "cdk-tools dryrun",
 		"deploy": "cdk-tools deploy",
-		"everything": "npm run test && npm run testsynth && npm run deploy"
+		"everything": "npm run testsynth && npm run test && npm run deploy"
 	}
 }
