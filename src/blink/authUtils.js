@@ -5,7 +5,7 @@ import {request} from './restUtils.js'
 
 const axiosInstance = axios.create()
 
-async function login(email, password) {
+export async function login(email, password) {
 	let postData = {
 		unique_id: appId,
 		email: email,
@@ -24,4 +24,13 @@ async function login(email, password) {
 	}
 }
 
-export {login}
+export async function authedRequest(urlBuilder, cachedAuth, options = {}) {
+	const {accountId, authToken, tier} = cachedAuth
+	const axiosInstance = axios.create({
+		headers: {'token-auth': authToken},
+		...options
+	})
+
+	let response = await request(async () => await axiosInstance.get(urlBuilder(accountId, tier)))
+	return response.data
+}
