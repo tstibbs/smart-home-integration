@@ -1,10 +1,10 @@
+import backOff from 'exponential-backoff'
 import {authedRequest, login} from './authUtils.js'
 
 const MINUTE_IN_MILLIS = 1 * 60 * 1000
 
-async function fetchSnapshot(email, password, network, camera) {
-	const cachedAuth = await login(email, password)
-	let startDate = encodeURIComponent(new Date(Date.now() - MINUTE_IN_MILLIS).toISOString())
+async function doFetchSnapshot(cachedAuth, startDate, network, camera) {
+	console.log(Date.now())
 	let data = await authedRequest(
 		(accountId, tier) =>
 			`https://rest-${tier}.immedia-semi.com/api/v1/accounts/${accountId}/media/changed?since=${startDate}`,
@@ -23,7 +23,6 @@ async function fetchSnapshot(email, password, network, camera) {
 		throw error
 	} else {
 		let latest = videos.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at))[0]
-		console.log(latest)
 		let thumbnail = await authedRequest(
 			(accountId, tier) => `https://rest-${tier}.immedia-semi.com${latest.thumbnail}`,
 			cachedAuth,
@@ -31,6 +30,19 @@ async function fetchSnapshot(email, password, network, camera) {
 		)
 		return 'data:image/jpeg;base64,' + thumbnail.toString('base64')
 	}
+}
+
+async function fetchSnapshot(email, password, network, camera) {
+	const cachedAuth = await login(email, password)
+	let startDate = encodeURIComponent(new Date(Date.now() - MINUTE_IN_MILLIS).toISOString())
+
+	//next line will re-throw the error thrown by doFetchSnapshot if the retries are exceeded
+	let response = await backOff.backOff(() => doFetchSnapshot(cachedAuth, startDate, network, camera), {
+		//the following two numbers are chosen to try to get 5 requests into the 29-second api-gateway limit
+		numOfAttempts: 5,
+		startingDelay: 1500
+	})
+	return response
 }
 
 export {fetchSnapshot}
