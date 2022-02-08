@@ -3,10 +3,13 @@
 import express from 'express'
 import bodyParser from 'body-parser'
 import {validateCdkAssets} from '@tstibbs/cloud-core-utils'
+import {handler} from '../src/app.js'
 
-let handlers = await validateCdkAssets('smart-home-integration', 1)
+let builtHandlers = await validateCdkAssets('smart-home-integration', 1)
+let builtHandler = builtHandlers[0]
 
-const router = handlers[0]
+const router = builtHandler
+// const router = handler
 
 const app = express()
 const port = 3001
