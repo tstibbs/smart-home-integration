@@ -4,4 +4,28 @@
 
 Collection of functions that provide integration with smart home stuff.
 
-So far, the only integration is the ability to query the state (armed or disarmed) of a blink home camera setup. Thanks to https://github.com/MattTW/BlinkMonitorProtocol for the detailed API guide.
+So far, the only integration is some minimal integration with a blink home camera setup. Thanks to https://github.com/MattTW/BlinkMonitorProtocol for the detailed API guide.
+
+# Blink
+
+```
+curl -XPOST "https://<id>.execute-api.<region>.amazonaws.com/prod/blinkCheckAllArmed" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "<email adress here>",
+    "password": "<password here>"
+}'
+```
+
+```
+curl -XPOST "https://<id>.execute-api.<region>.amazonaws.com/prod/blinkGetTemperature" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "cameras": [
+        "<NameOfCamera1>",
+        "<NameOfCamera2>"
+    ],
+    "email": "<email adress here>",
+    "password": "<password here>"
+}'
+```
