@@ -2,10 +2,7 @@ import {authedRequest, login} from './authUtils.js'
 
 async function fetchData(email, password) {
 	const cachedAuth = await login(email, password)
-	let data = await authedRequest(
-		(accountId, tier) => `https://rest-${tier}.immedia-semi.com/api/v3/accounts/${accountId}/homescreen`,
-		cachedAuth
-	)
+	let data = await authedRequest(`/api/v3/accounts/${cachedAuth.accountId}/homescreen`, cachedAuth)
 	return data
 }
 

@@ -6,8 +6,7 @@ const MINUTE_IN_MILLIS = 1 * 60 * 1000
 async function doFetchSnapshot(cachedAuth, startDate, network, camera) {
 	console.log(Date.now())
 	let data = await authedRequest(
-		(accountId, tier) =>
-			`https://rest-${tier}.immedia-semi.com/api/v1/accounts/${accountId}/media/changed?since=${startDate}`,
+		`/api/v1/accounts/${cachedAuth.accountId}/media/changed?since=${startDate}`,
 		cachedAuth
 	)
 	let videos = data.media
@@ -23,11 +22,7 @@ async function doFetchSnapshot(cachedAuth, startDate, network, camera) {
 		throw error
 	} else {
 		let latest = videos.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at))[0]
-		let thumbnail = await authedRequest(
-			(accountId, tier) => `https://rest-${tier}.immedia-semi.com${latest.thumbnail}`,
-			cachedAuth,
-			{responseType: 'arraybuffer'}
-		)
+		let thumbnail = await authedRequest(`${latest.thumbnail}`, cachedAuth, {responseType: 'arraybuffer'})
 		return 'data:image/jpeg;base64,' + thumbnail.toString('base64')
 	}
 }

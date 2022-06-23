@@ -2,6 +2,7 @@ import modofun from 'modofun'
 
 import {post} from './utils.js'
 import {checkArmed, checkAllArmed} from './blink/checkArm.js'
+import {armAll} from './blink/arm.js'
 import {getTemperature} from './blink/environment.js'
 import {fetchSnapshot} from './blink/fetchSnapshot.js'
 import {isAWS} from './envs.js'
@@ -40,6 +41,13 @@ const handleBlinkCheckAllArmed = post(
 	})
 )
 
+const handleBlinkArmAll = post(
+	wrapper(async (body, res) => {
+		let result = await armAll(body.email, body.password)
+		res.json(result)
+	})
+)
+
 const handleFetchSnapshot = post(
 	wrapper(async (body, res) => {
 		let result = await fetchSnapshot(body.email, body.password, body.network, body.camera)
@@ -58,6 +66,7 @@ let router = modofun(
 	{
 		blinkCheckArmed: handleBlinkCheckArmed,
 		blinkCheckAllArmed: handleBlinkCheckAllArmed,
+		blinkArmAll: handleBlinkArmAll,
 		blinkGetTemperature: handleBlinkGetTemperature,
 		fetchSnapshot: handleFetchSnapshot
 	},

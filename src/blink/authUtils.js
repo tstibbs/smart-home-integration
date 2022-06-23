@@ -24,13 +24,14 @@ export async function login(email, password) {
 	}
 }
 
-export async function authedRequest(urlBuilder, cachedAuth, options = {}) {
-	const {accountId, authToken, tier} = cachedAuth
-	const axiosInstance = axios.create({
+export async function authedRequest(path, cachedAuth, options = {}) {
+	const {authToken, tier} = cachedAuth
+	let url = `https://rest-${tier}.immedia-semi.com${path}`
+	let config = {
+		url,
 		headers: {'token-auth': authToken},
 		...options
-	})
-
-	let response = await request(async () => await axiosInstance.get(urlBuilder(accountId, tier)))
+	}
+	let response = await request(async () => await axiosInstance.request(config))
 	return response.data
 }
