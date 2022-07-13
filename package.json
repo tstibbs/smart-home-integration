@@ -17,16 +17,12 @@
 		"express": "^4.18.1",
 		"husky": "^4.2.5",
 		"jest": "^28.1.1",
-		"lint-staged": "^13.0.1",
+		"lint-staged": "^13.0.3",
 		"node-watch-changes": "^2.0.3",
-		"prettier": "^2.6.2"
-	},
-	"husky": {
-		"hooks": {
-			"pre-commit": "lint-staged"
-		}
+		"prettier": "^2.7.1"
 	},
 	"scripts": {
+		"preinstall": "git config core.hooksPath .project/hooks",
 		"dev": "cdk-tools watch \"dev:_serve\"",
 		"dev:_serve": "nodemon --watch cdk.out --watch ./test/index.js ./test/index.js",
 		"test": "APP_ID=dummy CF_ROLE_ARN=dummy node test/basic.js && cdk-tools testcdk",
