@@ -10,8 +10,8 @@
 	},
 	"devDependencies": {
 		"@tstibbs/cloud-core-utils": "file:../cloud-core/aws/utils",
-		"aws-cdk": "^2.37.1",
-		"aws-cdk-lib": "^2.37.1",
+		"aws-cdk": "^2.38.0",
+		"aws-cdk-lib": "^2.38.0",
 		"body-parser": "^1.20.0",
 		"esbuild": "^0.15.5",
 		"express": "^4.18.1",
