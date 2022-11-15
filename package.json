@@ -1,6 +1,10 @@
 {
 	"name": "@tstibbs/smart-home-integration-functions",
 	"private": true,
+	"engines": {
+		"node": ">=16",
+		"npm": ">=8"
+	},
 	"type": "module",
 	"dependencies": {
 		"axios": "^0.27.2",
