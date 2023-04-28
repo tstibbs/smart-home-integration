@@ -34,6 +34,10 @@ curl -XPOST "https://<id>.execute-api.<region>.amazonaws.com/prod/blinkGetTemper
 }'
 ```
 
+# Architecture
+
+[High level architecture diagram](high-level-architecture.png)
+
 # Contributing
 
 PRs are very welcome, but for any big changes or new features please open an issue to discuss first.
