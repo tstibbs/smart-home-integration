@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 import {request} from '../restUtils.js'
+import {auth} from './auth.js'
 
 //if currently the weekend, show the whole of the next week, otherwise show this week
 const sowAdjusters = [1, 0, -1, -2, -3, -4, 2]
@@ -14,26 +15,6 @@ export async function fetchMeals(username, password, school, studentId) {
 	let cookies = await auth(username, password, school)
 	let {data} = await fetchData(cookies, school, studentId)
 	return getMealsForDate(data, date)
-}
-
-async function auth(username, password, school) {
-	let response = await request(() =>
-		axios.post(`https://${school}.arbor.sc/auth/login`, {
-			items: [
-				{
-					username: username,
-					password: password
-				}
-			]
-		})
-	)
-	let cookieHeaders = response.headers['set-cookie']
-	if (cookieHeaders != null) {
-		let cookies = cookieHeaders.filter(header => header.startsWith('mis=')).map(header => header.split(';')[0])
-		return cookies.join('; ')
-	} else {
-		console.error('auth failed, no set-cookie headers in response')
-	}
 }
 
 async function fetchData(cookies, school, studentId) {
