@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 import {appId} from '../envs.js'
-import {request} from './restUtils.js'
+import {request} from '../restUtils.js'
 
 const axiosInstance = axios.create()
 

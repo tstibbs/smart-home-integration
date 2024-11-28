@@ -5,6 +5,7 @@ import {checkArmed, checkAllArmed} from './blink/checkArm.js'
 import {armAll} from './blink/arm.js'
 import {getTemperature} from './blink/environment.js'
 import {fetchSnapshot} from './blink/fetchSnapshot.js'
+import {fetchMeals} from './arbor/meals.js'
 import {isAWS} from './envs.js'
 
 const wrapper = delegate => {
@@ -62,13 +63,21 @@ const handleBlinkGetTemperature = post(
 	})
 )
 
+const handleArborFetchMeals = post(
+	wrapper(async (body, res) => {
+		let result = await fetchMeals(body.username, body.password, body.school, body.studentId)
+		res.json(result)
+	})
+)
+
 let router = modofun(
 	{
 		blinkCheckArmed: handleBlinkCheckArmed,
 		blinkCheckAllArmed: handleBlinkCheckAllArmed,
 		blinkArmAll: handleBlinkArmAll,
 		blinkGetTemperature: handleBlinkGetTemperature,
-		fetchSnapshot: handleFetchSnapshot
+		fetchSnapshot: handleFetchSnapshot,
+		arborFetchMeals: handleArborFetchMeals
 	},
 	{
 		mode: 'reqres'
