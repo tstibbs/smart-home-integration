@@ -18,7 +18,8 @@ export async function fetchMeals(username, password, school, studentId) {
 }
 
 async function fetchData(cookies, school, studentId) {
-	let url = `https://${school}.arbor.sc/guardians/meal-ui/setup-meal-choices/meal-rotation-menu-id/1/student-id/${studentId}?format=javascript`
+	//TODO I have no idea what the meal-rotation-menu-id and term-id numbers actually refer to.
+	let url = `https://${school}.arbor.sc/guardians/meal-ui/setup-meal-choices/meal-rotation-menu-id/6/student-id/${studentId}/term-id/71?format=javascript`
 
 	return await request(() =>
 		axios.get(url, {
