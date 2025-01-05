@@ -8,8 +8,7 @@ import {handler} from '../src/app.js'
 let builtHandlers = await validateCdkAssets('smart-home-integration', 1)
 let builtHandler = builtHandlers[0]
 
-const router = builtHandler
-// const router = handler
+const router = process.env.LOAD_HANDLER_FROM_CDK != null ? builtHandler : handler
 
 const app = express()
 const port = 3001

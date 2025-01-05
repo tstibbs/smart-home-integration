@@ -27,8 +27,9 @@
 	},
 	"scripts": {
 		"preinstall": "git config core.hooksPath .project/hooks",
-		"dev": "cdk-tools watch \"dev:_serve\"",
-		"dev:_serve": "nodemon --watch cdk.out --watch ./test/index.js ./test/index.js",
+		"dev": "nodemon --watch ./src ./test/index.js",
+		"cdk-dev": "cdk-tools watch \"cdk-dev:_serve\"",
+		"cdk-dev:_serve": "LOAD_HANDLER_FROM_CDK=true nodemon --watch cdk.out --watch ./test/index.js ./test/index.js",
 		"test": "APP_ID=dummy CF_ROLE_ARN=dummy node test/basic.js && cdk-tools testcdk",
 		"testsynth": "cdk-tools testsynth",
 		"dryrun": "cdk-tools dryrun",
