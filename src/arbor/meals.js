@@ -7,19 +7,18 @@ import {auth} from './auth.js'
 const sowAdjusters = [1, 0, -1, -2, -3, -4, 2]
 const daysOfTheWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
 
-export async function fetchMeals(username, password, school, studentId) {
+export async function fetchMeals(username, password, school, studentId, menuId, termId) {
 	console.log({school, studentId})
 	let date = new Date()
 	date.setDate(date.getDate())
 	console.log(date)
 	let cookies = await auth(username, password, school)
-	let {data} = await fetchData(cookies, school, studentId)
+	let {data} = await fetchData(cookies, school, studentId, menuId, termId)
 	return getMealsForDate(data, date)
 }
 
-async function fetchData(cookies, school, studentId) {
-	//TODO I have no idea what the meal-rotation-menu-id and term-id numbers actually refer to.
-	let url = `https://${school}.arbor.sc/guardians/meal-ui/setup-meal-choices/meal-rotation-menu-id/6/student-id/${studentId}/term-id/71?format=javascript`
+async function fetchData(cookies, school, studentId, menuId, termId) {
+	let url = `https://${school}.arbor.sc/guardians/meal-ui/setup-meal-choices/meal-rotation-menu-id/${menuId}/student-id/${studentId}/term-id/${termId}?format=javascript`
 
 	return await request(() =>
 		axios.get(url, {
