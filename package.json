@@ -7,23 +7,23 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"axios": "^1.6.2",
-		"dotenv": "^16.3.1",
-		"exponential-backoff": "^3.1.1",
+		"axios": "^1.9.0",
+		"dotenv": "^16.5.0",
+		"exponential-backoff": "^3.1.2",
 		"modofun": "^1.2.2"
 	},
 	"devDependencies": {
 		"@tstibbs/cloud-core-utils": "file:../cloud-core/aws/utils",
-		"aws-cdk": "^2.110.0",
-		"aws-cdk-lib": "^2.110.0",
-		"body-parser": "^1.20.2",
-		"esbuild": "^0.19.6",
-		"express": "^4.18.2",
+		"aws-cdk": "^2.1018.1",
+		"aws-cdk-lib": "^2.200.1",
+		"body-parser": "^2.2.0",
+		"esbuild": "^0.25.5",
+		"express": "^5.1.0",
 		"husky": "^4.2.5",
-		"jest": "^29.7.0",
-		"lint-staged": "^13.0.3",
-		"node-watch-changes": "^2.0.3",
-		"prettier": "^2.7.1"
+		"jest": "^30.0.0",
+		"lint-staged": "^16.1.0",
+		"node-watch-changes": "^2.0.4",
+		"prettier": "^3.5.3"
 	},
 	"scripts": {
 		"preinstall": "git config core.hooksPath .project/hooks",
