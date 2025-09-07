@@ -33,7 +33,7 @@ function getMealsForDate(data, date) {
 	let sow = new Date(date)
 	sow.setDate(sow.getDate() + sowAdjusters[date.getDay()])
 	let sowDate = sow.toLocaleString('en-GB', {day: '2-digit'})
-	let sowMonth = sow.toLocaleString('en-GB', {month: 'short'})
+	let sowMonth = sow.toLocaleString('en-GB', {month: 'short'}).slice(0, 3)
 	let sowYear = sow.getFullYear()
 
 	let sowRegex = new RegExp(`Week beginning ${sowDate}.+${sowMonth}.+${sowYear}`)
