@@ -14,8 +14,8 @@ const app = express()
 const port = 3001
 
 app.use(bodyParser.json())
-app.get('/*', router)
-app.post('/*', router)
-app.options('/*', router)
+app.get('/*splat', router)
+app.post('/*splat', router)
+app.options('/*splat', router)
 
 app.listen(port, () => console.log(`Test harness listening on http://localhost:${port}.`))
