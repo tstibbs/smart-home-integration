@@ -1,24 +1,9 @@
-import axios from 'axios'
-
-import {request} from '../restUtils.js'
-import {auth} from './auth.js'
+import {fetch} from './utils.js'
 
 export async function fetchMealBalance(username, password, school, studentId) {
 	console.log({school, studentId})
-	let cookies = await auth(username, password, school)
-	let {data} = await fetchData(cookies, school, studentId)
+	const data = await fetch(username, password, school, `home-ui/dashboard/student-id/${studentId}`)
 	return getMealBalance(data)
-}
-
-async function fetchData(cookies, school, studentId) {
-	let url = `https://${school}.arbor.sc/guardians/home-ui/dashboard/student-id/${studentId}?format=javascript`
-	return await request(() =>
-		axios.get(url, {
-			headers: {
-				Cookie: cookies
-			}
-		})
-	)
 }
 
 function getMealBalance(data) {

@@ -7,6 +7,7 @@ import {getTemperature} from './blink/environment.js'
 import {fetchSnapshot} from './blink/fetchSnapshot.js'
 import {fetchMeals} from './arbor/meals.js'
 import {fetchMealBalance} from './arbor/mealAccount.js'
+import {fetchOutstandingTripPayments} from './arbor/trips.js'
 import {isAWS} from './envs.js'
 
 const wrapper = delegate => {
@@ -79,6 +80,13 @@ const handleArborFetchMealBalance = post(
 	})
 )
 
+const handleArborOutstandingPayments = post(
+	wrapper(async (body, res) => {
+		let result = await fetchOutstandingTripPayments(body.username, body.password, body.school, body.studentId)
+		res.json(result)
+	})
+)
+
 let router = modofun(
 	{
 		blinkCheckArmed: handleBlinkCheckArmed,
@@ -87,7 +95,8 @@ let router = modofun(
 		blinkGetTemperature: handleBlinkGetTemperature,
 		fetchSnapshot: handleFetchSnapshot,
 		arborFetchMeals: handleArborFetchMeals,
-		arborFetchMealBalance: handleArborFetchMealBalance
+		arborFetchMealBalance: handleArborFetchMealBalance,
+		arborFetchOutstandingPayments: handleArborOutstandingPayments
 	},
 	{
 		mode: 'reqres'

@@ -1,7 +1,6 @@
 import axios from 'axios'
 
-import {request} from '../restUtils.js'
-import {auth} from './auth.js'
+import {fetch} from './utils.js'
 
 //if currently the weekend, show the whole of the next week, otherwise show this week
 const sowAdjusters = [1, 0, -1, -2, -3, -4, 2]
@@ -12,21 +11,13 @@ export async function fetchMeals(username, password, school, studentId, menuId, 
 	let date = new Date()
 	date.setDate(date.getDate())
 	console.log(date)
-	let cookies = await auth(username, password, school)
-	let {data} = await fetchData(cookies, school, studentId, menuId, termId)
-	return getMealsForDate(data, date)
-}
-
-async function fetchData(cookies, school, studentId, menuId, termId) {
-	let url = `https://${school}.arbor.sc/guardians/meal-ui/setup-meal-choices/meal-rotation-menu-id/${menuId}/student-id/${studentId}/term-id/${termId}?format=javascript`
-
-	return await request(() =>
-		axios.get(url, {
-			headers: {
-				Cookie: cookies
-			}
-		})
+	const data = await fetch(
+		username,
+		password,
+		school,
+		`meal-ui/setup-meal-choices/meal-rotation-menu-id/${menuId}/student-id/${studentId}/term-id/${termId}`
 	)
+	return getMealsForDate(data, date)
 }
 
 function getMealsForDate(data, date) {
