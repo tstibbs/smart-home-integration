@@ -12,6 +12,7 @@ import {isAWS} from './envs.js'
 
 const wrapper = delegate => {
 	return async (req, res) => {
+		console.log(`${req.method}:${req.path}`)
 		try {
 			let result = await delegate(req.body, res)
 			res.json(result)
@@ -67,15 +68,15 @@ const handleBlinkGetTemperature = post(
 
 const handleArborFetchMeals = post(
 	wrapper(async (body, res) => {
-		const {username, password, school, studentId, menuId, termId} = body
-		let result = await fetchMeals(username, password, school, studentId, menuId, termId)
+		const {username, password, school, studentId, menuId} = body
+		let result = await fetchMeals(username, password, school, studentId, menuId)
 		res.json(result)
 	})
 )
 
 const handleArborFetchMealBalance = post(
 	wrapper(async (body, res) => {
-		let result = await fetchMealBalance(body.username, body.password, body.school, body.studentId)
+		let result = await fetchMealBalance(body.username, body.password, body.school)
 		res.json(result)
 	})
 )

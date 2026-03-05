@@ -1,8 +1,8 @@
 import {fetch} from './utils.js'
 
-export async function fetchMealBalance(username, password, school, studentId) {
-	console.log({school, studentId})
-	const data = await fetch(username, password, school, `home-ui/dashboard/student-id/${studentId}`)
+export async function fetchMealBalance(username, password, school) {
+	console.log({school})
+	const data = await fetch(username, password, school, `home-ui/dashboard`)
 	return getMealBalance(data)
 }
 
