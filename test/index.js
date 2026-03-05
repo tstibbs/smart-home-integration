@@ -3,13 +3,20 @@
 import express from 'express'
 import bodyParser from 'body-parser'
 import {validateCdkAssets} from '@tstibbs/cloud-core-utils'
+
+import {buildStack} from '../lib/deploy-utils.js'
 import {handler} from '../src/app.js'
 
-let builtHandlers = await validateCdkAssets('smart-home-integration', 1)
-let builtHandler = builtHandlers[0]
+async function loadHandler() {
+	if (process.env.LOAD_HANDLER_FROM_CDK != null) {
+		const builtHandlers = await validateCdkAssets(buildStack, 1)
+		return builtHandlers[0]
+	} else {
+		return handler
+	}
+}
 
-const router = process.env.LOAD_HANDLER_FROM_CDK != null ? builtHandler : handler
-
+const router = await loadHandler()
 const app = express()
 const port = 3001
 
