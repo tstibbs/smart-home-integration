@@ -1,4 +1,4 @@
 import {validateCdkAssets} from '@tstibbs/cloud-core-utils'
-import {STACK_NAME} from '../lib/deploy-envs.js'
+import {buildStack} from '../lib/deploy-utils.js'
 
-await validateCdkAssets(STACK_NAME, 1)
+await validateCdkAssets(buildStack, 1)
