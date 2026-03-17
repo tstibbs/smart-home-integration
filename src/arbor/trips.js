@@ -17,8 +17,15 @@ export async function fetchOutstandingTripPayments(username, password, school, s
 		const amounts = findMatches(tripData, node => node.props?.fieldLabel == 'Amount outstanding').map(
 			node => node.props?.value
 		)
-		const amountString = amounts.length == 1 ? amounts[0] : `Error, unexpected number of amounts: ${amounts.join(';')}`
-		outstanding.push([name, amountString])
+		if (amounts.length == 1) {
+			if (amounts[0] == '£0.00' || amounts[0] == '0.00' || amounts[0] == '0') {
+				console.log(`Amount appears to be zero, ignoring: ${amounts[0]}`)
+			} else {
+				outstanding.push([name, amounts[0]])
+			}
+		} else {
+			outstanding.push([name, `Error, unexpected number of amounts: ${amounts.join(';')}`])
+		}
 	}
 	return {
 		data: outstanding
