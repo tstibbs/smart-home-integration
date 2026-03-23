@@ -19,17 +19,21 @@ export async function fetchOutstandingTripPayments(username, password, school, s
 			}
 			const sanitizedUrl = url.replace(/^\/guardians\//, '')
 			const tripData = await fetch(username, password, school, sanitizedUrl)
-			const amounts = findMatches(tripData, node => node.props?.fieldLabel == 'Amount outstanding').map(
+			let amounts = findMatches(tripData, node => node.props?.fieldLabel == 'Amount outstanding').map(
 				node => node.props?.value
 			)
-			if (amounts.length == 1) {
+			if (amounts.length == 0) {
+				console.log(`No outstanding amount found.`)
+				amounts = findMatches(tripData, node => node.props?.fieldLabel == 'Price').map(node => node.props?.value)
+			}
+			if (amounts.length == 0) {
+				console.log(`Ignoring entry with no outstanding amount or price: ${name}`)
+			} else if (amounts.length == 1) {
 				if (amounts[0] == '£0.00' || amounts[0] == '0.00' || amounts[0] == '0') {
 					console.log(`Amount appears to be zero, ignoring '${amounts[0]}' for ${name}`)
 				} else {
 					outstanding.push([name, amounts[0]])
 				}
-			} else if (amounts.length == 0) {
-				console.log(`Ignoring entry with no outstanding amount: ${name}`)
 			} else {
 				outstanding.push([name, `Error, unexpected number of amounts: ${amounts.join(';')}`])
 			}
