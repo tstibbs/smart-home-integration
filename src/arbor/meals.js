@@ -6,8 +6,8 @@ import {fetch} from './utils.js'
 const sowAdjusters = [1, 0, -1, -2, -3, -4, 2]
 const daysOfTheWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
 
-export async function fetchMeals(username, password, school, studentId, menuId) {
-	console.log({school, studentId, menuId})
+export async function fetchMeals(username, password, school, studentId, menuId, termId) {
+	console.log({school, studentId})
 	let date = new Date()
 	date.setDate(date.getDate())
 	console.log(date)
@@ -15,7 +15,7 @@ export async function fetchMeals(username, password, school, studentId, menuId) 
 		username,
 		password,
 		school,
-		`meal-ui/setup-meal-choices/meal-rotation-menu-id/${menuId}/student-id/${studentId}`
+		`meal-ui/setup-meal-choices/meal-rotation-menu-id/${menuId}/student-id/${studentId}/term-id/${termId}`
 	)
 	return getMealsForDate(data, date)
 }
