@@ -1,5 +1,3 @@
-import axios from 'axios'
-
 import {fetch} from './utils.js'
 
 //if currently the weekend, show the whole of the next week, otherwise show this week
@@ -17,6 +15,7 @@ export async function fetchMeals(username, password, school, studentId, menuId, 
 		school,
 		`meal-ui/setup-meal-choices/meal-rotation-menu-id/${menuId}/student-id/${studentId}/term-id/${termId}`
 	)
+	console.log(JSON.stringify(data))
 	return getMealsForDate(data, date)
 }
 

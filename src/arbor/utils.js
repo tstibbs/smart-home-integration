@@ -15,23 +15,25 @@ export function findMatches(node, predicate) {
 }
 
 export async function fetch(username, password, school, path) {
-	const cookies = await authenticator.auth(username, password, school)
 	const url = `https://${school}.arbor.sc/guardians/${path}?format=javascript`
+	const doOneRequest = async () => {
+		console.log(url)
+		const cookies = await authenticator.auth(username, password, school)
+		return await axios.get(url, {
+			headers: {
+				Cookie: cookies
+			}
+		})
+	}
 	const {data} = await request(async () => {
 		try {
-			return await axios.get(url, {
-				headers: {
-					Cookie: cookies
-				}
-			})
+			return await doOneRequest()
 		} catch (e) {
-			if (e.response.status == 401) {
+			if (e.response.status == 401 || e.response.status == 403) {
+				//arbor returns 403 to mean "auth failed"
+				console.error('Request failed with 401, re-authing.')
 				authenticator.invalidateCookies()
-				return await axios.get(url, {
-					headers: {
-						Cookie: cookies
-					}
-				})
+				return await doOneRequest()
 			} else {
 				throw e
 			}
