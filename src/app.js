@@ -68,8 +68,8 @@ const handleBlinkGetTemperature = post(
 
 const handleArborFetchMeals = post(
 	wrapper(async (body, res) => {
-		const {username, password, school, studentId, menuId, termId} = body
-		let result = await fetchMeals(username, password, school, studentId, menuId, termId)
+		const {username, password, school, studentId, menuId} = body
+		let result = await fetchMeals(username, password, school, studentId, menuId)
 		res.json(result)
 	})
 )
