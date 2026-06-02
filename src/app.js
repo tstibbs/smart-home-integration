@@ -76,7 +76,8 @@ const handleArborFetchMeals = post(
 
 const handleArborFetchMealBalance = post(
 	wrapper(async (body, res) => {
-		let result = await fetchMealBalance(body.username, body.password, body.school)
+		const {username, password, school, studentId} = body
+		let result = await fetchMealBalance(username, password, school, studentId)
 		res.json(result)
 	})
 )
