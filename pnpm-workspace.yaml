@@ -1,0 +1,5 @@
+allowBuilds:
+  '@tstibbs/cloud-core-utils@https://codeload.github.com/tstibbs/cloud-core/tar.gz/8d802f727d4dff7edecaa3a936804c76fbb070db#path:/aws/utils': true
+  esbuild: true
+  husky: true
+  unrs-resolver: true

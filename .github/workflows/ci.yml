@@ -12,32 +12,13 @@ jobs:
 
     steps:
 
-    # checkout a dependent project
     - uses: actions/checkout@v4
-      with:
-        repository: tstibbs/cloud-core
-        path: 'cloud-core' # will resolve to /home/runner/work/smart-home-integration/smart-home-integration/cloud-core
+    - uses: jdx/mise-action@v4
 
-    # checkout 'this' project
-    - uses: actions/checkout@v4
-      with:
-        path: 'smart-home-integration' # will resolve to /home/runner/work/smart-home-integration/smart-home-integration/smart-home-integration
-
-    - uses: actions/setup-node@v4
-      with:
-        node-version: 22.x
     - name: Set up environment
       run: mkdir cdk.tmp
-      working-directory: smart-home-integration
-
-    - name: Load cloud-core dependencies
-      run: npm ci
-      working-directory: cloud-core/aws/utils
       
-    - run: npm ci
-      working-directory: smart-home-integration
-    - run: npm run testsynth
-      working-directory: smart-home-integration
-    - run: npm run test
-      working-directory: smart-home-integration
+    - run: pnpm ci
+    - run: pnpm run testsynth
+    - run: pnpm run test
     # don't run the actual deploy in the CI, but run everything up to here to get the best idea of whether it works

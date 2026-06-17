@@ -3,7 +3,14 @@
 	"private": true,
 	"engines": {
 		"node": ">=22",
-		"npm": ">=10"
+		"pnpm": ">=11.7",
+		"npm": "9999.9.9-use-pnpm"
+	},
+	"devEngines": {
+		"packageManager": {
+			"name": "pnpm",
+			"onFail": "error"
+		}
 	},
 	"type": "module",
 	"dependencies": {
@@ -13,9 +20,9 @@
 		"modofun": "^1.2.2"
 	},
 	"devDependencies": {
-		"@tstibbs/cloud-core-utils": "file:../cloud-core/aws/utils",
-		"aws-cdk": "^2.1018.1",
-		"aws-cdk-lib": "^2.200.1",
+		"@tstibbs/cloud-core-utils": "github:tstibbs/cloud-core#path:/aws/utils",
+		"aws-cdk": "^2.1126.0",
+		"aws-cdk-lib": "^2.258.1",
 		"body-parser": "^2.2.0",
 		"esbuild": "^0.25.5",
 		"express": "^5.1.0",
@@ -34,6 +41,6 @@
 		"testsynth": "cdk-tools testsynth",
 		"dryrun": "cdk-tools dryrun",
 		"deploy": "cdk-tools deploy",
-		"everything": "npm run testsynth && npm run test && npm run deploy"
+		"everything": "pnpm run testsynth && pnpm run test && pnpm run deploy"
 	}
 }
