@@ -29,6 +29,7 @@ export async function fetch(username, password, school, path) {
 		try {
 			return await doOneRequest()
 		} catch (e) {
+			console.error(e)
 			if (e.response.status == 401 || e.response.status == 403) {
 				//arbor returns 403 to mean "auth failed"
 				console.error('Request failed with 401, re-authing.')

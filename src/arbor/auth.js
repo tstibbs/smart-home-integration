@@ -9,6 +9,11 @@ class Authenticator {
 		this.#persistedCookies = null
 	}
 
+	//only for tests, to bypass the auth requirement
+	setInitialCookieValue(value) {
+		this.#persistedCookies = value
+	}
+
 	async auth(username, password, school) {
 		if (this.#persistedCookies == null) {
 			console.log('no persisted cookies, authenticating')

@@ -30,7 +30,9 @@
 		"jest": "^30.4.2",
 		"lint-staged": "^17.0.7",
 		"node-watch-changes": "^2.0.4",
-		"prettier": "^3.8.4"
+		"nodemon": "^3.1.14",
+		"prettier": "^3.8.4",
+		"vitest": "^4.1.11"
 	},
 	"scripts": {
 		"preinstall": "git config core.hooksPath .project/hooks",
@@ -38,6 +40,7 @@
 		"cdk-dev": "cdk-tools watch \"cdk-dev:_serve\"",
 		"cdk-dev:_serve": "LOAD_HANDLER_FROM_CDK=true nodemon --watch cdk.out --watch ./test/index.js ./test/index.js",
 		"test": "APP_ID=dummy CF_ROLE_ARN=dummy node test/basic.js && cdk-tools testcdk",
+		"vitest": "vitest run",
 		"testsynth": "cdk-tools testsynth",
 		"dryrun": "cdk-tools dryrun",
 		"deploy": "cdk-tools deploy",

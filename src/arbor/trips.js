@@ -45,7 +45,12 @@ export async function fetchOutstandingTripPayments(username, password, school, s
 		amount
 	])
 	const outstanding = await fetchAmount(upcomingTrips)
+	return [...outstanding, ...optionalOutstanding]
+}
+
+export async function fetchOutstandingTripPaymentsForRest(username, password, school, studentId) {
+	const data = await fetchOutstandingTripPayments(username, password, school, studentId)
 	return {
-		data: [...outstanding, ...optionalOutstanding]
+		data
 	}
 }

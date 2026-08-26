@@ -5,9 +5,10 @@ import {checkArmed, checkAllArmed} from './blink/checkArm.js'
 import {armAll} from './blink/arm.js'
 import {getTemperature} from './blink/environment.js'
 import {fetchSnapshot} from './blink/fetchSnapshot.js'
+import {fetchAllArbor} from './arbor/fetch-all.js'
 import {fetchMeals} from './arbor/meals.js'
 import {fetchMealBalance} from './arbor/mealAccount.js'
-import {fetchOutstandingTripPayments} from './arbor/trips.js'
+import {fetchOutstandingTripPaymentsForRest} from './arbor/trips.js'
 import {isAWS} from './envs.js'
 
 const wrapper = delegate => {
@@ -66,6 +67,14 @@ const handleBlinkGetTemperature = post(
 	})
 )
 
+const handleArborFetchAll = post(
+	wrapper(async (body, res) => {
+		const {username, password, students} = body
+		let result = await fetchAllArbor(username, password, students)
+		res.json(result)
+	})
+)
+
 const handleArborFetchMeals = post(
 	wrapper(async (body, res) => {
 		const {username, password, school, studentId, menuId} = body
@@ -84,7 +93,7 @@ const handleArborFetchMealBalance = post(
 
 const handleArborOutstandingPayments = post(
 	wrapper(async (body, res) => {
-		let result = await fetchOutstandingTripPayments(body.username, body.password, body.school, body.studentId)
+		let result = await fetchOutstandingTripPaymentsForRest(body.username, body.password, body.school, body.studentId)
 		res.json(result)
 	})
 )
@@ -96,6 +105,7 @@ let router = modofun(
 		blinkArmAll: handleBlinkArmAll,
 		blinkGetTemperature: handleBlinkGetTemperature,
 		fetchSnapshot: handleFetchSnapshot,
+		arbor: handleArborFetchAll,
 		arborFetchMeals: handleArborFetchMeals,
 		arborFetchMealBalance: handleArborFetchMealBalance,
 		arborFetchOutstandingPayments: handleArborOutstandingPayments
