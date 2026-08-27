@@ -100,15 +100,15 @@ const handleArborOutstandingPayments = post(
 
 let router = modofun(
 	{
-		blinkCheckArmed: handleBlinkCheckArmed,
-		blinkCheckAllArmed: handleBlinkCheckAllArmed,
-		blinkArmAll: handleBlinkArmAll,
-		blinkGetTemperature: handleBlinkGetTemperature,
-		fetchSnapshot: handleFetchSnapshot,
-		arbor: handleArborFetchAll,
-		arborFetchMeals: handleArborFetchMeals,
-		arborFetchMealBalance: handleArborFetchMealBalance,
-		arborFetchOutstandingPayments: handleArborOutstandingPayments
+		// blinkCheckArmed: handleBlinkCheckArmed,
+		// blinkCheckAllArmed: handleBlinkCheckAllArmed,
+		// blinkArmAll: handleBlinkArmAll,
+		// blinkGetTemperature: handleBlinkGetTemperature,
+		// fetchSnapshot: handleFetchSnapshot,
+		arbor: handleArborFetchAll
+		// arborFetchMeals: handleArborFetchMeals,
+		// arborFetchMealBalance: handleArborFetchMealBalance,
+		// arborFetchOutstandingPayments: handleArborOutstandingPayments
 	},
 	{
 		mode: 'reqres'
