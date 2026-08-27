@@ -2,13 +2,10 @@ import {fetchMealBalance} from './mealAccount.js'
 import {fetchOutstandingTripPayments} from './trips.js'
 
 export async function fetchAllArbor(username, password, students) {
-	if (!Array.isArray(students)) {
-		throw new Error("param 'students' should be an array of objects like {school, studentId}")
-	}
-	const results = []
+	const results = {}
 	//deliberately not run in parallel to avoid sending too many requests at the same time
-	for (const {school, studentId} of students) {
-		results.push(await fetchOneStudent(username, password, school, studentId))
+	for (const [studentName, {school, studentId}] of Object.entries(students)) {
+		results[studentName] = await fetchOneStudent(username, password, school, studentId)
 	}
 	return results
 }

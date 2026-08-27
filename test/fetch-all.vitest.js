@@ -33,9 +33,16 @@ describe('fetch all arbor data', () => {
 			return {data: {}, status: 404}
 		})
 
-		const data = await fetchAllArbor(username, password, [{school, studentId}])
-		const [student1] = data
-		expect(student1.mealBalance).toBe(5.67)
-		expect(student1.outstandingPayments).toEqual([])
+		const data = await fetchAllArbor(username, password, {student1: {school, studentId}, student2: {school, studentId}})
+		expect(data).toStrictEqual({
+			student1: {
+				mealBalance: 5.67,
+				outstandingPayments: []
+			},
+			student2: {
+				mealBalance: 5.67,
+				outstandingPayments: []
+			}
+		})
 	})
 })
