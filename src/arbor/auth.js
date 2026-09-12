@@ -1,6 +1,4 @@
-import axios from 'axios'
-
-import {request} from '../restUtils.js'
+import {request, axiosInstance} from '../restUtils.js'
 
 class Authenticator {
 	#persistedCookies
@@ -18,7 +16,7 @@ class Authenticator {
 		if (this.#persistedCookies == null) {
 			console.log('no persisted cookies, authenticating')
 			let response = await request(() =>
-				axios.post(`https://${school}.arbor.sc/auth/login`, {
+				axiosInstance.post(`https://${school}.arbor.sc/auth/login`, {
 					items: [
 						{
 							username: username,
@@ -28,12 +26,17 @@ class Authenticator {
 				})
 			)
 			console.log(response.status)
+			console.log(response.headers)
+			console.log(response.data)
 			let cookieHeaders = response.headers['set-cookie']
-			if (cookieHeaders != null) {
-				let cookies = cookieHeaders.filter(header => header.startsWith('mis=')).map(header => header.split(';')[0])
-				this.#persistedCookies = cookies.join('; ')
-			} else {
+			if (cookieHeaders == null) {
 				console.error('auth failed, no set-cookie headers in response')
+			} else {
+				let cookies = cookieHeaders.map(header => header.split(';')[0])
+				this.#persistedCookies = cookies.join('; ')
+				if (!cookies.some(header => header.startsWith('mis='))) {
+					console.error('auth possibly failed, no mis cookie in response')
+				}
 			}
 		} else {
 			console.log('already have persisted cookies, not re-authenticating')

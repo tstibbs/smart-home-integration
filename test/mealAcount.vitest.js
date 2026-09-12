@@ -1,8 +1,10 @@
 import {describe, it, expect, vi, beforeEach} from 'vitest'
-import axios from 'axios'
 import {fetchMealBalance} from '../src/arbor/mealAccount.js'
 import activePaymentsFixture from './fixtures/active-payments.json'
 import {authenticator} from '../src/arbor/auth.js'
+import {axiosInstance} from '../src/restUtils.js'
+import AxiosMockAdapter from 'axios-mock-adapter'
+const axiosMock = new AxiosMockAdapter(axiosInstance)
 
 authenticator.setInitialCookieValue('')
 
@@ -11,9 +13,6 @@ const password = 'psword'
 const school = 'sch-name'
 const studentId = 'student-id'
 
-// Tell Vitest to replace the real axios module with a mock object
-vi.mock('axios')
-
 describe('fetch meal balance', () => {
 	beforeEach(() => {
 		// Reset call counts and state before each test
@@ -21,13 +20,9 @@ describe('fetch meal balance', () => {
 	})
 
 	it('test', async () => {
-		axios.get.mockImplementation(async (url, data) => {
-			if (url.includes(`customer-account-ui/active-payments/student-id/${studentId}`)) {
-				return {data: activePaymentsFixture, status: 200}
-			}
-
-			return {data: {}, status: 404}
-		})
+		axiosMock
+			.onGet(new RegExp(`/guardians/customer-account-ui/active-payments/student-id/${studentId}`))
+			.reply(200, activePaymentsFixture)
 
 		const mealBalance = await fetchMealBalance(username, password, school, studentId)
 		expect(mealBalance).toBe(5.67)

@@ -1,7 +1,5 @@
-import axios from 'axios'
-
 import {authenticator} from './auth.js'
-import {request} from '../restUtils.js'
+import {request, axiosInstance} from '../restUtils.js'
 
 export function findMatches(node, predicate) {
 	if (node != null) {
@@ -19,7 +17,7 @@ export async function fetch(username, password, school, path) {
 	const doOneRequest = async () => {
 		console.log(url)
 		const cookies = await authenticator.auth(username, password, school)
-		return await axios.get(url, {
+		return await axiosInstance.get(url, {
 			headers: {
 				Cookie: cookies
 			}

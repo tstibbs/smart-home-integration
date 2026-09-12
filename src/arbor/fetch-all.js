@@ -1,5 +1,11 @@
 import {fetchMealBalance} from './mealAccount.js'
 import {fetchOutstandingTripPayments} from './trips.js'
+import {authenticator} from './auth.js'
+
+export async function fetchAllArborForRest(username, password, students) {
+	authenticator.invalidateCookies()
+	return await fetchAllArbor(username, password, students)
+}
 
 export async function fetchAllArbor(username, password, students) {
 	const results = {}

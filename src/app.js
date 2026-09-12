@@ -5,7 +5,7 @@ import {checkArmed, checkAllArmed} from './blink/checkArm.js'
 import {armAll} from './blink/arm.js'
 import {getTemperature} from './blink/environment.js'
 import {fetchSnapshot} from './blink/fetchSnapshot.js'
-import {fetchAllArbor} from './arbor/fetch-all.js'
+import {fetchAllArborForRest} from './arbor/fetch-all.js'
 import {fetchMeals} from './arbor/meals.js'
 import {fetchMealBalance} from './arbor/mealAccount.js'
 import {fetchOutstandingTripPaymentsForRest} from './arbor/trips.js'
@@ -70,7 +70,7 @@ const handleBlinkGetTemperature = post(
 const handleArborFetchAll = post(
 	wrapper(async (body, res) => {
 		const {username, password, students} = body
-		let result = await fetchAllArbor(username, password, students)
+		let result = await fetchAllArborForRest(username, password, students)
 		res.json(result)
 	})
 )

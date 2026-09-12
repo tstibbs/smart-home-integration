@@ -23,6 +23,7 @@
 		"@tstibbs/cloud-core-utils": "github:tstibbs/cloud-core#path:/aws/utils",
 		"aws-cdk": "^2.1126.0",
 		"aws-cdk-lib": "^2.258.1",
+		"axios-mock-adapter": "^2.1.0",
 		"body-parser": "^2.3.0",
 		"esbuild": "^0.28.1",
 		"express": "^5.2.1",
