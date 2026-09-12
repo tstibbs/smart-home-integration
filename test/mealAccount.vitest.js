@@ -1,6 +1,6 @@
 import {describe, it, expect, vi, beforeEach} from 'vitest'
 import {fetchMealBalance} from '../src/arbor/mealAccount.js'
-import activePaymentsFixture from './fixtures/active-payments.json'
+import activePaymentsFixture from './fixtures/active-payments-negative.json'
 import {authenticator} from '../src/arbor/auth.js'
 import {axiosInstance} from '../src/restUtils.js'
 import AxiosMockAdapter from 'axios-mock-adapter'
@@ -25,6 +25,6 @@ describe('fetch meal balance', () => {
 			.reply(200, activePaymentsFixture)
 
 		const mealBalance = await fetchMealBalance(username, password, school, studentId)
-		expect(mealBalance).toBe(5.67)
+		expect(mealBalance).toBe(-3.2)
 	})
 })

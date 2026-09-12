@@ -1,6 +1,6 @@
 import {describe, it, expect, vi, beforeEach} from 'vitest'
 import {fetchAllArbor} from '../src/arbor/fetch-all.js'
-import activePaymentsFixture from './fixtures/active-payments.json'
+import activePaymentsFixture from './fixtures/active-payments-positive.json'
 import tripsFixture from './fixtures/trips.json'
 import {authenticator} from '../src/arbor/auth.js'
 import {axiosInstance} from '../src/restUtils.js'
